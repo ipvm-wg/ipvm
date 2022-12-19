@@ -1,15 +1,15 @@
 use anyhow::{anyhow, bail, Result};
 use clap::Parser;
-use diesel::RunQueryDsl;
+use diesel::prelude::*;
 use ipfs_api::{response::AddResponse, IpfsApi, IpfsClient};
 use ipvm::{
     cli::{Args, Argument},
-    db::{self, schema},
+    db::{self, schema::receipts::dsl},
     network::{client::Client, eventloop::Event, swarm},
     wasm::operator,
     workflow::{
         closure::{Action, Closure, Input},
-        receipt::NewReceipt,
+        receipt::{NewReceipt, Receipt},
     },
 };
 use libipld::{
@@ -177,15 +177,17 @@ async fn main() -> Result<()> {
 
             let mut conn = db::establish_connection();
 
-            let new_receipt = NewReceipt {
+            NewReceipt {
                 val: res.parse::<i32>().expect("i32"), // FIXME!
                 closure_cid: closure_cid.clone(),
-            };
+            }
+            .insert(&mut conn)
+            .map_err(|err| panic!("{}", err));
 
-            diesel::insert_into(schema::receipts::table)
-                .values(&new_receipt)
-                .execute(&mut conn)
-                .expect("Error saving new post");
+            //FIXME todo!("advertise receipt");
+            let all_receipts = dsl::receipts
+                .load::<Receipt>(&mut conn)
+                .expect("Error loading Receipts");
 
             let res_copy = res.clone().into_bytes();
 

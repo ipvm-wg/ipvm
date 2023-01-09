@@ -2394,7 +2394,7 @@ dependencies = [
  "libipld",
  "libipld-core",
  "libp2p",
- "multihash 0.17.0",
+ "multihash 0.18.0",
  "proptest",
  "semver 1.0.16",
  "serde_ipld_dagcbor",
@@ -3516,6 +3516,23 @@ dependencies = [
  "multihash-derive",
  "serde",
  "serde-big-array",
+ "sha2 0.10.6",
+ "sha3",
+ "unsigned-varint",
+]
+
+[[package]]
+name = "multihash"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "15e5d911412e631e1de11eb313e4dd71f73fd964401102aab23d6c8327c431ba"
+dependencies = [
+ "blake2b_simd",
+ "blake2s_simd",
+ "blake3",
+ "core2",
+ "digest 0.10.6",
+ "multihash-derive",
  "sha2 0.10.6",
  "sha3",
  "unsigned-varint",

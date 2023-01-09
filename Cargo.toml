@@ -44,7 +44,7 @@ json = "0.12"
 libipld = "0.15"
 libipld-core = { version = "0.15", features = ["serde-codec", "serde"] }
 libp2p = { version = "0.50", features = ["full"] }
-multihash = "0.17"
+multihash = "0.18"
 proptest = { version = "1.0", optional = true }
 semver = "1.0"
 serde_ipld_dagcbor = "0.2"
